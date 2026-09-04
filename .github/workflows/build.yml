@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -19,25 +19,30 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android
+      - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Install Android SDK
         run: |
           sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
+      - name: Install Gradle
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip -q gradle-8.7-bin.zip -d /opt
+          mv /opt/gradle-8.7 /opt/gradle
+
       - name: Unpack project
         run: |
           unzip -q RandomWords_GitHub_APK.zip
-          cd RandomWords_GitHub
-          ls -la
+          ls -la RandomWords_GitHub
 
       - name: Build APK
         run: |
           cd RandomWords_GitHub
-          gradle :app:assembleDebug --no-daemon
+          /opt/gradle/bin/gradle :app:assembleDebug --no-daemon
 
-      - name: Save APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: RandomWords-APK
