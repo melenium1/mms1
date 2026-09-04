@@ -33,8 +33,8 @@ jobs:
           mv /opt/gradle-8.7 /opt/gradle
 
       - name: Unpack project
-        run: |
-          unzip -q RandomWords_GitHub_APK.zip
+        - run: unzip -q "RandomWords_GitHub_APK (1).zip" 
+  
           ls -la RandomWords_GitHub
 
       - name: Build APK
