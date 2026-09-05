@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up Java 17
+      - name: Set up Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
@@ -33,12 +33,6 @@ jobs:
           wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip -q gradle-8.7-bin.zip -d /opt
           mv /opt/gradle-8.7 /opt/gradle
-
-      - name: Unpack project
-        run: |
-          unzip -q "RandomWords_CLEAN.zip"
-          echo "Project files:"
-          ls -la
 
       - name: Build APK
         run: |
